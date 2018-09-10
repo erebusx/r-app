@@ -3,7 +3,7 @@
 ```
 cd /tmp
 rm  -rf 17ce_padavan_ins.sh
-wget -O 17ce_padavan_ins.sh https://coding.net/u/ipk/p/17ce/git/raw/master/17ce_padavan_ins.sh
+wget -O 17ce_padavan_ins.sh https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce/17ce_padavan_ins.sh
 chmod +x 17ce_padavan_ins.sh
 ./17ce_padavan_ins.sh xxx    (xxx改成您的用户名)
 ```
@@ -15,6 +15,6 @@ opkg update
 opkg install wget
 cd /tmp
 rm  -rf 17ce_openwrt_ins.sh
-wget --no-check-certificate -O 17ce_openwrt_ins.sh https://coding.net/u/ipk/p/17ce/git/raw/master/17ce_openwrt_ins.sh
+wget --no-check-certificate -O 17ce_openwrt_ins.sh https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce/17ce_openwrt_ins.sh
 chmod +x 17ce_openwrt_ins.sh
 ./17ce_openwrt_ins.sh xxx    (xxx改成您的用户名)

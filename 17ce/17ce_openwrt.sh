@@ -1,6 +1,6 @@
 #!/bin/sh
 # Copyight (C) www.17ce.com
-https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce/17ce_openwrt.sh
+
 CDN_BASE="https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce"
 UPDATE_URL="https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce/17ce_version.php"
 TEMP_FILE="/tmp/update.txt"
