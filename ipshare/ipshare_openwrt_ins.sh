@@ -1,7 +1,7 @@
  #!/bin/sh
 #create by ipshare
 https://raw.githubusercontent.com/erebusx/r-app/master/17ce/17ce_openwrt.sh
-BASE_URL='https://raw.githubusercontent.com/erebusx/r-app/master/ipshare/'
+BASE_URL='https://raw.githubusercontent.com/erebusx/r-app/ipshare/ipshare/'
 WORK_PATH='/tmp/ipshare'
 CONF_PATH='/etc/config'
 CONF_FILE="$CONF_PATH/ipshare"
@@ -16,7 +16,7 @@ rm -rf /tmp/ipshare
 rm -rf ipshare*
 
 mkdir /etc/ipshare
-wget --no-check-certificate -O /etc/ipshare/ipshare_openwrt_ins.sh https://raw.githubusercontent.com/erebusx/r-app/master/ipshare/ipshare_openwrt.sh 2>/dev/null  >/dev/null
+wget --no-check-certificate -O /etc/ipshare/ipshare_openwrt_ins.sh https://raw.githubusercontent.com/erebusx/r-app/ipshare/ipshare/ipshare_openwrt.sh 2>/dev/null  >/dev/null
 chmod +x  /etc/ipshare/ipshare_openwrt_ins.sh
 
 if [ ! -f "/etc/init.d/ipshare_openwrt" ]; then
@@ -50,7 +50,7 @@ create_config()
     cd $CONF_PATH
     wget_download ipshare $BASE_URL/lib/ipshare 2>/dev/null  >/dev/null
     chmod +x ipshare
-    dat="`wget --no-check-certificate https://raw.githubusercontent.com/erebusx/r-app/master/ipshare/lib/libnam -O - -q ; echo`"   
+    dat="`wget --no-check-certificate https://raw.githubusercontent.com/erebusx/r-app/ipshare/ipshare/lib/libnam -O - -q ; echo`"   
     eval echo "option username "$dat"" >> ipshare
 }
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 #create by openwrt
 
-BASE_URL='https://raw.githubusercontent.com/erebusx/r-app/master/ipshare'
+BASE_URL='https://raw.githubusercontent.com/erebusx/r-app/ipshare/ipshare'
 WORK_PATH='/tmp/ipshare'
 CONF_PATH='/etc/config'
 CONF_FILE="$CONF_PATH/ipshare"
@@ -49,7 +49,7 @@ create_config()
     cd $CONF_PATH
     wget_download ipshare $BASE_URL/lib/ipshare 2>/dev/null  >/dev/null
     chmod +x ipshare
-    dat="`wget --no-check-certificate https://raw.githubusercontent.com/erebusx/r-app/master/ipshare/lib/libnam -O - -q ; echo`"   
+    dat="`wget --no-check-certificate https://raw.githubusercontent.com/erebusx/r-app/ipshare/ipshare/lib/libnam -O - -q ; echo`"   
     eval echo "option username "$dat"" >> ipshare
 }
 
@@ -93,7 +93,7 @@ fi
         $EXEC_BIN start
         echo "ipshare has started."  
         sleep 20
-        wget --no-check-certificate -O /etc/ipshare/ipshare_openwrt_tmp.sh https://raw.githubusercontent.com/erebusx/r-app/master/ipshare/ipshare_openwrt_tmp.sh 2>/dev/null  >/dev/null
+        wget --no-check-certificate -O /etc/ipshare/ipshare_openwrt_tmp.sh https://raw.githubusercontent.com/erebusx/r-app/ipshare/ipshare/ipshare_openwrt_tmp.sh 2>/dev/null  >/dev/null
         chmod +x /etc/ipshare/ipshare_openwrt_tmp.sh
         sh /etc/ipshare/ipshare_openwrt_tmp.sh               
         fi
