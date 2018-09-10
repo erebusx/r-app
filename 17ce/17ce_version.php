@@ -1,1 +1,1 @@
-3.0.10 http://www.17ce.com/soft/route/files/pandora/17ce.3.0.10.tgz
+3.0.20 http://www.17ce.com/soft/route/files/pandora/17ce.3.0.20.tgz
