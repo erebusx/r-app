@@ -32,16 +32,16 @@ wget_install()
 }
 init_conf()
 {
-  if [ ! -f "/etc/init.d/17ce_openwrt" ]; then
-    #echo -e "#!/bin/sh /etc/rc.common \n# Copyright (C) 17ce.com \nstart=99 \n/etc/17ce/17ce_openwrt_ins.sh $1 2>/dev/null  >/dev/null" >/etc/init.d/17ce_openwrt
-    cat <<EOF > /etc/init.d/17ce_openwrt
+  #echo -e "#!/bin/sh /etc/rc.common \n# Copyright (C) 17ce.com \nstart=99 \n/etc/17ce/17ce_openwrt_ins.sh $1 2>/dev/null  >/dev/null" >/etc/init.d/17ce_openwrt
+  cat <<EOF > /etc/init.d/17ce_openwrt
 #!/bin/sh /etc/rc.common
 # Copyright (C) 17ce.com
 START=99
 STOP=10
+
 start()
 {
-    /etc/17ce/17ce_openwrt.sh $1 2>/dev/null  >/dev/null
+    /etc/17ce/17ce_openwrt.sh $1
 }
 
 stop()
@@ -52,7 +52,7 @@ stop()
 }
 EOF
   chmod +x /etc/init.d/17ce_openwrt
-  fi
+
   if [ ! -f "/etc/rc.d/S9917ce_openwrt" ]; then
     ln -s /etc/init.d/17ce_openwrt /etc/rc.d/S9917ce_openwrt
     ln -s /etc/init.d/17ce_openwrt /etc/rc.d/K1017ce_openwrt
