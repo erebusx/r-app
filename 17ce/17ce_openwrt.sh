@@ -75,14 +75,20 @@ init_files()
   rm -rf $WORK_DIR
   mkdir -p $WORK_DIR
   cd $WORK_DIR
-  wget_install 17ce_v3      $CDN_BASE/bin/17ce_v3
-  wget_install conf.json    $CDN_BASE/bin/conf.json
-  wget_install ld-uClibc.so.1   $CDN_BASE/lib/ld-uClibc.so.1
-  wget_install libc.so      $CDN_BASE/lib/libc.so
-  wget_install libcurl.so.4   $CDN_BASE/lib/libcurl.so.4
-  wget_install libstdc++.so.6   $CDN_BASE/lib/libstdc
-  wget_install libpolarssl.so.7    $CDN_BASE/lib/libpolarssl.so.7
-  wget_install libpthread.so.0    $CDN_BASE/lib/libpthread.so.0
+  #wget_install 17ce_v3      $CDN_BASE/bin/17ce_v3
+  #wget_install conf.json    $CDN_BASE/bin/conf.json
+  ##wget_install ld-uClibc.so.1   $CDN_BASE/lib/ld-uClibc.so.1
+  #wget_install libc.so      $CDN_BASE/lib/libc.so
+  #wget_install libcurl.so.4   $CDN_BASE/lib/libcurl.so.4
+  #wget_install libstdc++.so.6   $CDN_BASE/lib/libstdc
+  ##wget_install libpolarssl.so.7    $CDN_BASE/lib/libpolarssl.so.7
+  ##wget_install libpthread.so.0    $CDN_BASE/lib/libpthread.so.0
+  wget_install bin.tar.gz  $CDN_BASE/bin.tar.gz
+  wget_install lib.tar.gz  $CDN_BASE/lib.tar.gz
+  tar zxvf bin.tar.gz
+  tar zxvf lib.tar.gz
+  rm -f bin.tar.gz
+  rm -f lib.tar.gz
 }
 start()
 {        
