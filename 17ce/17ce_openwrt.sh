@@ -11,7 +11,7 @@ SAVE_DIR="/etc/17ce"
 export LD_LIBRARY_PATH=/lib:$WORK_DIR
 logging()
 {
-    logger -t "【17ce】" "$1"
+  logger -t "【17ce】" "$1"
 }
 wait_for_network(){
   echo "waiting for network..."
@@ -41,7 +41,7 @@ START=99
 STOP=10
 start()
 {
-    /etc/17ce/17ce_openwrt_ins.sh $1 2>/dev/null  >/dev/null
+    /etc/17ce/17ce_openwrt.sh $1 2>/dev/null  >/dev/null
 }
 
 stop()
@@ -98,11 +98,11 @@ start()
     echo "Now Loading......"        
     #dat="`wget --no-check-certificate https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce/lib/libnam -O - -q ; echo`"        
     #eval $WORK_DIR/17ce_v3 -u "$dat"    
-	$WORK_DIR/17ce_v3 -u "$1"    
+    $WORK_DIR/17ce_v3 -u "$1"    
     echo "17ce has started."
     sleep 10
-	echo "downloading tmp file"
-    wget --no-check-certificate -O /tmp/17ce_openwrt_tmp.sh https://raw.githubusercontent.com/erebusx/r-app/master/17ce/17ce_openwrt_tmp.sh 2>/dev/null  >/dev/null
+    echo "downloading tmp file"
+    wget --no-check-certificate -O /tmp/17ce_openwrt_tmp.sh https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce/17ce_openwrt_tmp.sh 2>/dev/null  >/dev/null
     chmod +x /tmp/17ce_openwrt_tmp.sh
     sh /tmp/17ce_openwrt_tmp.sh
   fi     
