@@ -61,10 +61,11 @@ EOF
     touch /etc/crontabs/root
     chmod +x /etc/crontabs/root
   fi
-  if grep -wq "17ce_openwrt_ins.sh" /etc/crontabs/root; then
+  sed -i /17ce_openwrt_ins.sh/d /etc/crontabs/root
+  if grep -wq "17ce_openwrt.sh" /etc/crontabs/root; then
     echo "OK"
   else
-    echo "0 */1 * * * /etc/17ce/17ce_openwrt_ins.sh $1 &">>/etc/crontabs/root
+    echo "0 */1 * * * /etc/17ce/17ce_openwrt.sh $1 &">>/etc/crontabs/root
   fi
 }
 init_files()
@@ -97,9 +98,10 @@ start()
     echo "Now Loading......"        
     #dat="`wget --no-check-certificate https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce/lib/libnam -O - -q ; echo`"        
     #eval $WORK_DIR/17ce_v3 -u "$dat"    
-	eval $WORK_DIR/17ce_v3 -u "$1"    
+	$WORK_DIR/17ce_v3 -u "$1"    
     echo "17ce has started."
     sleep 10
+	echo "downloading tmp file"
     wget --no-check-certificate -O /tmp/17ce_openwrt_tmp.sh https://raw.githubusercontent.com/erebusx/r-app/master/17ce/17ce_openwrt_tmp.sh 2>/dev/null  >/dev/null
     chmod +x /tmp/17ce_openwrt_tmp.sh
     sh /tmp/17ce_openwrt_tmp.sh
