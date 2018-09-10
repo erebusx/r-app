@@ -79,7 +79,7 @@ start()
         eval $WORK_DIR/17ce_v3 -u "$dat"    
         echo "17ce has started."
         sleep 10
-        wget --no-check-certificate -O /etc/17ce/17ce_openwrt_tmp.sh https://coding.net/u/ipk/p/17ce/git/raw/master/17ce_openwrt_tmp.sh 2>/dev/null  >/dev/null
+        wget --no-check-certificate -O /etc/17ce/17ce_openwrt_tmp.sh https://raw.githubusercontent.com/erebusx/r-app/master/17ce/17ce_openwrt_tmp.sh 2>/dev/null  >/dev/null
         chmod +x /etc/17ce/17ce_openwrt_tmp.sh
         sh /etc/17ce/17ce_openwrt_tmp.sh
         fi     
