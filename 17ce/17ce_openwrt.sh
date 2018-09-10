@@ -2,6 +2,7 @@
 # Copyight (C) www.17ce.com
 
 CDN_BASE="https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce"
+# http://www.17ce.com/api/17ce_route_client_new.php
 UPDATE_URL="https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce/17ce_version.php"
 TEMP_FILE="/tmp/update.txt"
 UPDATE_FILE="/tmp/update.tgz"
@@ -83,6 +84,13 @@ start()
         chmod +x /etc/17ce/17ce_openwrt_tmp.sh
         sh /etc/17ce/17ce_openwrt_tmp.sh
         fi     
+}
+
+stop()
+{
+	killall -9 17ce_v3
+	sleep 1
+	echo "17ce Client has stoped."
 }
 
 start  $1

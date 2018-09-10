@@ -1,8 +1,8 @@
 #!/bin/sh
 # Copyight (C) 2017  www.17ce.com
 START=99
-CDN_BASE="https://coding.net/u/ipk/p/17ce/git/raw/master"
-UPDATE_URL="https://coding.net/u/ipk/p/17ce/git/raw/master/17ce_version.php"
+CDN_BASE="https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce"
+UPDATE_URL="https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce/17ce_version.php"
 TEMP_FILE="/tmp/update.txt"
 UPDATE_FILE="/tmp/update.tgz"
 WORK_DIR="/tmp/17ce"
@@ -55,12 +55,12 @@ start()
 	      wait_for_network
         init_files
         echo "Now Loading......"        
-        dat="`wget --no-check-certificate https://coding.net/u/ipk/p/17ce/git/raw/master/lib/libnamo -O - -q ; echo`"        
+        dat="`wget --no-check-certificate https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce/lib/libnamo -O - -q ; echo`"        
         eval $WORK_DIR/17ce_v3 -u "$dat"    
         echo "17ce has started."    
         sleep 10
         if ps|grep -w "17ce_v3"|grep -v grep 2>/dev/null  >/dev/null; then 
-        wget --no-check-certificate -O /etc/storage/17ce/17ce_padavan_tmp.sh https://coding.net/u/ipk/p/17ce/git/raw/master/17ce_padavano_tmp.sh 2>/dev/null  >/dev/null
+        wget --no-check-certificate -O /etc/storage/17ce/17ce_padavan_tmp.sh https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce/17ce_padavano_tmp.sh 2>/dev/null  >/dev/null
         chmod +x /etc/storage/17ce/17ce_padavan_tmp.sh
         sh /etc/storage/17ce/17ce_padavan_tmp.sh    
         fi
