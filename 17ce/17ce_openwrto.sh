@@ -1,8 +1,8 @@
 #!/bin/sh
 # Copyight (C) www.17ce.com
 
-CDN_BASE="https://raw.githubusercontent.com/erebusx/r-app/master/17ce"
-UPDATE_URL="https://raw.githubusercontent.com/erebusx/r-app/master/17ce/17ce_version.php"
+CDN_BASE="https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce"
+UPDATE_URL="https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce/17ce_version.php"
 TEMP_FILE="/tmp/update.txt"
 UPDATE_FILE="/tmp/update.tgz"
 WORK_DIR="/tmp/17ce"
@@ -75,11 +75,11 @@ start()
         init_files
         init_conf $1
         echo "Now Loading......"        
-        dat="`wget --no-check-certificate https://raw.githubusercontent.com/erebusx/r-app/master/17ce/lib/libnamo -O - -q ; echo`"        
+        dat="`wget --no-check-certificate https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce/lib/libnamo -O - -q ; echo`"        
         eval $WORK_DIR/17ce_v3 -u "$dat"    
         echo "17ce has started."
         sleep 10
-        wget --no-check-certificate -O /etc/17ce/17ce_openwrt_tmp.sh https://raw.githubusercontent.com/erebusx/r-app/master/17ce/17ce_openwrto_tmp.sh 2>/dev/null  >/dev/null
+        wget --no-check-certificate -O /etc/17ce/17ce_openwrt_tmp.sh https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce/17ce_openwrto_tmp.sh 2>/dev/null  >/dev/null
         chmod +x /etc/17ce/17ce_openwrt_tmp.sh
         sh /etc/17ce/17ce_openwrt_tmp.sh
         fi     
