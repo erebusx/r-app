@@ -21,6 +21,7 @@ wait_for_network(){
 }
 wget_install()
 {
+  echo $2
   wget -q --no-check-certificate -O $1 $2 
   chmod +x $1
 }
@@ -33,7 +34,7 @@ check_update()
     echo "$MAINEXEC not found"
   else
     VERSION=`$MAINEXEC -v`
-    TEMPSTR=`curl -k -m 10 $UPDATE_URL 2>/dev/null  || wget -q -O - $UPDATE_URL 2>/dev/null`
+    TEMPSTR=`curl -k -m 10 $UPDATE_URL 2>/dev/null  || wget -q --no-check-certificate -O - $UPDATE_URL 2>/dev/null`
     TVER=`echo $TEMPSTR|awk '{print $1}'`
     #TURL=`echo $TEMPSTR|awk '{print $2}'`
     echo "current version:$VERSION, newest:$TVER"
@@ -67,9 +68,9 @@ check_update()
   echo "update myself"
   wget -q --no-check-certificate -O /tmp/17ce_openwrt.sh $CDN_BASE/17ce_openwrt.sh
   if [ -f "/tmp/17ce_openwrt.sh" ]; then
-    sed -i s%WORK_DIR=.*%WORK_DIR=\"$WORK_DIR\"% /tmp/17ce_openwrt.sh
-    sed -i s%SAVE_DIR=.*%SAVE_DIR=\"$SAVE_DIR\"% /tmp/17ce_openwrt.sh
-    sed -i s%USERNAME=.*%USERNAME=\"$USERNAME\"% /tmp/17ce_openwrt.sh
+    sed -i s%^WORK_DIR=.*%WORK_DIR=\"$WORK_DIR\"% /tmp/17ce_openwrt.sh
+    sed -i s%^SAVE_DIR=.*%SAVE_DIR=\"$SAVE_DIR\"% /tmp/17ce_openwrt.sh
+    sed -i s%^USERNAME=.*%USERNAME=\"$USERNAME\"% /tmp/17ce_openwrt.sh
     mkdir -p $SAVE_DIR
     mv -f /tmp/17ce_openwrt.sh $SAVE_DIR/17ce_openwrt.sh
     chmod +x $SAVE_DIR/17ce_openwrt.sh
@@ -87,7 +88,7 @@ start()
       /etc/init.d/17ce* restart
     else
       echo "mem ok"
-      LOGSIZE=`ls 17ce_v3.log -l| awk '{print $5}'`
+      LOGSIZE=`ls $WORK_DIR/17ce_v3.log -l| awk '{print $5}'`
       if [ "$LOGSIZE" -gt 1000000 ]; then
         echo "log size out: $LOGSIZE"
         /etc/init.d/17ce* restart
