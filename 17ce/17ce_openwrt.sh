@@ -12,6 +12,7 @@ USERNAME="$1"
 export LD_LIBRARY_PATH=/lib:$WORK_DIR
 logging()
 {
+  echo $1
   logger -t "【17ce】" "$1"
 }
 wait_for_network(){
@@ -37,7 +38,7 @@ check_update()
     TEMPSTR=`curl -k -m 10 $UPDATE_URL 2>/dev/null  || wget -q --no-check-certificate -O - $UPDATE_URL 2>/dev/null`
     TVER=`echo $TEMPSTR|awk '{print $1}'`
     #TURL=`echo $TEMPSTR|awk '{print $2}'`
-    echo "current version:$VERSION, newest:$TVER"
+    logging "current version:$VERSION, newest:$TVER"
     if [ "$VERSION" == "$TVER" ]; then
       UPFLAG=0
     fi
@@ -99,7 +100,7 @@ start()
   else
     echo "starting 17ce"
     sleep 2
-    logging "17ce account：$USERNAME"
+    logging "account : $USERNAME"
     $WORK_DIR/17ce_v3 -u "$USERNAME"    
   fi     
 }
