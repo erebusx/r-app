@@ -1,5 +1,5 @@
 #!/bin/sh
-BASE_URL='https://raw.githubusercontent.com/erebusx/r-app/ipshare/ipshare'
+BASE_URL='https://raw.githubusercontent.com/erebusx/r-app/master/ipshare'
 WORK_DIR='/tmp/ipshare'
 SAVE_DIR='/etc/ipshare'
 CONF_DIR='/etc/config'
@@ -50,7 +50,7 @@ check_update()
   fi
 
   echo "update myself"
-  wget_download /tmp/ipshare_openwrt.sh https://raw.githubusercontent.com/erebusx/r-app/ipshare/ipshare/ipshare_openwrt.sh
+  wget_download /tmp/ipshare_openwrt.sh $BASE_URL/ipshare_openwrt.sh
   if [ -f "/tmp/ipshare_openwrt.sh" ]; then
     sed -i s%^WORK_DIR=.*%WORK_DIR=\"$WORK_DIR\"% /tmp/ipshare_openwrt.sh
     sed -i s%^SAVE_DIR=.*%SAVE_DIR=\"$SAVE_DIR\"% /tmp/ipshare_openwrt.sh

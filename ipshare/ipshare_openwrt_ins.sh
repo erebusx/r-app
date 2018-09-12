@@ -1,5 +1,5 @@
  #!/bin/sh
-BASE_URL='https://raw.githubusercontent.com/erebusx/r-app/ipshare/ipshare'
+BASE_URL='https://raw.githubusercontent.com/erebusx/r-app/master/ipshare'
 WORK_DIR='/tmp/ipshare'
 SAVE_DIR='/etc/ipshare'
 CONF_DIR='/etc/config'
