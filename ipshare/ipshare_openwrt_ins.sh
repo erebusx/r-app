@@ -1,93 +1,100 @@
  #!/bin/sh
-#create by ipshare
-https://raw.githubusercontent.com/erebusx/r-app/master/17ce/17ce_openwrt.sh
-BASE_URL='https://raw.githubusercontent.com/erebusx/r-app/master/ipshare/'
-WORK_PATH='/tmp/ipshare'
-CONF_PATH='/etc/config'
-CONF_FILE="$CONF_PATH/ipshare"
-SUCC_FLAG="$WORK_PATH"/success
-EXEC_BIN="$WORK_PATH"/ipshare
+BASE_URL='https://raw.githubusercontent.com/erebusx/r-app/ipshare/ipshare'
+WORK_DIR='/tmp/ipshare'
+SAVE_DIR='/etc/ipshare'
+CONF_DIR='/etc/config'
+CONF_FILE="$CONF_DIR/ipshare"
+export LD_LIBRARY_PATH=/lib:$WORK_DIR
 
-export LD_LIBRARY_PATH=/lib:$WORK_PATH
+init_conf()
+{
+  #echo -e "#!/bin/sh /etc/rc.common \n# Copyright (C) ipshare \nstart=99 \n/etc/ipshare/ipshare_openwrt_ins.sh $1 2>/dev/null  >/dev/null" >/etc/init.d/ipshare_openwrt
+  cat <<EOF > /etc/init.d/ipshare_openwrt
+#!/bin/sh /etc/rc.common
+START=80
+STOP=10
 
-echo "installing ipshare"
-rm -rf /etc/ipshare
-rm -rf /tmp/ipshare
-rm -rf ipshare*
+start() {
+    $SAVE_DIR/ipshare_openwrt.sh start
+}
 
-mkdir /etc/ipshare
-wget --no-check-certificate -O /etc/ipshare/ipshare_openwrt_ins.sh https://raw.githubusercontent.com/erebusx/r-app/master/ipshare/ipshare_openwrt.sh 2>/dev/null  >/dev/null
-chmod +x  /etc/ipshare/ipshare_openwrt_ins.sh
+restart() {
+    $SAVE_DIR/ipshare_openwrt.sh restart
+}
 
-if [ ! -f "/etc/init.d/ipshare_openwrt" ]; then
-  echo -e "#!/bin/sh /etc/rc.common \n# Copyright (C) ipshare \nstart=99 \n/etc/ipshare/ipshare_openwrt_ins.sh $1 2>/dev/null  >/dev/null" >/etc/init.d/ipshare_openwrt
+stop() {
+    $SAVE_DIR/ipshare_openwrt.sh stop
+}
+EOF
   chmod +x /etc/init.d/ipshare_openwrt
-fi
 
-if [ ! -f "/etc/rc.d/S99ipshare_openwrt" ]; then
-  ln -s /etc/init.d/ipshare_openwrt /etc/rc.d/S99ipshare_openwrt
-fi
+  if [ ! -f "/etc/rc.d/S9917ce_openwrt" ]; then
+    ln -s /etc/init.d/ipshare_openwrt /etc/rc.d/S99ipshare_openwrt
+    ln -s /etc/init.d/ipshare_openwrt /etc/rc.d/K10ipshare_openwrt
+  fi
+  if [ ! -f "/etc/crontabs/root" ]; then
+    touch /etc/crontabs/root
+    chmod +x /etc/crontabs/root
+  fi
+  sed -i /ipshare_openwrt_ins.sh/d /etc/crontabs/root
+  if grep -wq "ipshare_openwrt.sh" /etc/crontabs/root; then
+    echo "OK"
+  else
+    echo "0 */1 * * * $SAVE_DIR/ipshare_openwrt.sh &">>/etc/crontabs/root
+  fi
 
-if [ ! -f "/etc/crontabs/root" ]; then
-touch /etc/crontabs/root
-chmod +x /etc/crontabs/root
-fi
-if grep -wq "ipshare_openwrt_ins.sh" /etc/crontabs/root; then
-  echo "OK"
-else
-  echo "0 */1 * * * /etc/ipshare/ipshare_openwrt_ins.sh $1 &">>/etc/crontabs/root
-fi
-
-wget_download()
-{    
-    wget -T 60 -O $1  $2 --no-check-certificate  
-    chmod +x $1
+  mkdir -p $CONF_DIR
+  cat <<EOF > $CONF_FILE
+config base 'server'
+        option enable '1'
+        option username '$USERNAME'
+EOF
 }
 
-create_config()
-{   
-    mkdir -p $CONF_PATH
-    cd $CONF_PATH
-    wget_download ipshare $BASE_URL/lib/ipshare 2>/dev/null  >/dev/null
-    chmod +x ipshare
-    dat="`wget --no-check-certificate https://raw.githubusercontent.com/erebusx/r-app/master/ipshare/lib/libnam -O - -q ; echo`"   
-    eval echo "option username "$dat"" >> ipshare
-}
-
-create_files()
+install()
 {
-    killall -9 ipshare 2>/dev/null  >/dev/null
-    rm -rf $WORK_PATH
-    mkdir -p $WORK_PATH
-    cd $WORK_PATH
-    wget_download libcurl.so.4     $BASE_URL/lib/libcurl.so.4
-    wget_download libmbedcrypto.so.0     $BASE_URL/lib/libmbedcrypto.so.0
-    wget_download libmbedtls.so.9 $BASE_URL/lib/libmbedtls.so.9
-    wget_download libmbedx509.so.0     $BASE_URL/lib/libmbedx509.so.0
-    wget_download libpolarssl.so.7     $BASE_URL/lib/libpolarssl.so.7
-    wget_download libpthread.so.0     $BASE_URL/lib/libpthread.so.0
-    wget_download ipshare       $BASE_URL/bin/ipshare
-    chmod +x ipshare
+  echo "installing ipshare"
+  if [ $# == 1 ]; then
+    echo "ipshare account：$1"
+    USERNAME="$1"
+    sleep 2
+  else
+    echo "Usage: ipshare_openwrt_ins.sh install xxx"
+    USERNAME="erebusx"
+  fi
+
+  rm -rf $SAVE_DIR
+  rm -rf $WORK_DIR
+  rm -f $CONF_FILE
+  killall -9 17ce_v3 2>/dev/null >/dev/null
+  cd /tmp
+  wget -q --no-check-certificate -O /tmp/ipshare_openwrt.sh $BASE_URL/ipshare_openwrt.sh
+  if [ -f "/tmp/ipshare_openwrt.sh" ]; then
+    init_conf $USERNAME
+    sed -i s%^WORK_DIR=.*%WORK_DIR=\"$WORK_DIR\"% /tmp/ipshare_openwrt.sh
+    sed -i s%^SAVE_DIR=.*%SAVE_DIR=\"$SAVE_DIR\"% /tmp/ipshare_openwrt.sh
+    #sed -i s%^USERNAME=.*%USERNAME=\"$USERNAME\"% /tmp/ipshare_openwrt.sh
+    mkdir -p $SAVE_DIR
+    mv -f /tmp/ipshare_openwrt.sh $SAVE_DIR/ipshare_openwrt.sh
+    chmod +x $SAVE_DIR/ipshare_openwrt.sh
+    sh $SAVE_DIR/ipshare_openwrt.sh start
+  fi
 }
 
-start()
+uninstall()
 {
-if [ $# == 1 ]; then
-	echo "starting ipshare"	
-	sleep 2
-else
-	echo "Usage: ./ipshare_openwrt_ins.sh xxx   # xxx改成您的账户"
-	exit 1
-fi
-        echo "ipshare账户："$1""
-        create_files $1
-        echo "Now Loading..."
-        create_config $1
-        echo "Now Loading......"
-        sleep 2
-        $EXEC_BIN start
-        echo "ipshare has started."   
+  echo "uninstalling ipshare"
+  killall -9 ipshare
+  rm -rf $SAVE_DIR
+  rm -rf $WORK_DIR
+  rm -f $CONF_FILE
+  rm -f /etc/init.d/ipshare_openwrt
+  rm -f /etc/rc.d/S99ipshare_openwrt
+  rm -f /etc/rc.d/K10ipshare_openwrt
+  if [ -f "/etc/crontabs/root" ]; then
+    sed -i /ipshare_openwrt.*.sh/d /etc/crontabs/root
+  fi
+  echo "done"
 }
 
-
-start $1
+$*
