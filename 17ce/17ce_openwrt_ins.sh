@@ -45,11 +45,12 @@ install()
 {
   echo "installing 17ce"
   if [ $# == 1 ]; then
-    echo "17CE account：$1"	
+    echo "17CE account：$1"
+    USERNAME="$1"    
     sleep 2
   else
-    echo "Usage: ./17ce_openwrt_ins.sh xxx@xxx.com"
-    exit 1
+    echo "Usage: ./17ce_openwrt_ins.sh install xxx@xxx.com"
+    USERNAME="40089975@qq.com"
   fi
   echo 
   echo "by 17CE"
@@ -61,9 +62,9 @@ install()
   wget -q --no-check-certificate -O /tmp/17ce_openwrt.sh https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce/17ce_openwrt.sh
   if [ -f "/tmp/17ce_openwrt.sh" ]; then
     init_conf $1
-    sed -i s%WORK_DIR=.*%WORK_DIR=\"$WORK_DIR\"% /tmp/17ce_openwrt.sh
-    sed -i s%SAVE_DIR=.*%SAVE_DIR=\"$SAVE_DIR\"% /tmp/17ce_openwrt.sh
-    sed -i s%USERNAME=.*%USERNAME=\"$1\"% /tmp/17ce_openwrt.sh
+    sed -i s%^WORK_DIR=.*%WORK_DIR=\"$WORK_DIR\"% /tmp/17ce_openwrt.sh
+    sed -i s%^SAVE_DIR=.*%SAVE_DIR=\"$SAVE_DIR\"% /tmp/17ce_openwrt.sh
+    sed -i s%^USERNAME=.*%USERNAME=\"$USERNAME\"% /tmp/17ce_openwrt.sh
     mkdir -p $SAVE_DIR
     mv -f /tmp/17ce_openwrt.sh $SAVE_DIR/17ce_openwrt.sh
     chmod +x $SAVE_DIR/17ce_openwrt.sh
@@ -74,6 +75,7 @@ install()
 uninstall()
 {
   echo "uninstalling 17ce"
+  killall -9 17ce_v3
   rm -rf $SAVE_DIR
   rm -rf $WORK_DIR
   rm -rf 17ce*

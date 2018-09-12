@@ -1,9 +1,7 @@
 #17ce for 老毛子padavan：
 
 ```
-cd /tmp
-rm  -rf 17ce_padavan_ins.sh
-wget -O 17ce_padavan_ins.sh https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce/17ce_padavan_ins.sh
+wget --no-check-certificate https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce/17ce_padavan_ins.sh
 chmod +x 17ce_padavan_ins.sh
 ./17ce_padavan_ins.sh xxx    (xxx改成您的用户名)
 ```
@@ -13,8 +11,6 @@ chmod +x 17ce_padavan_ins.sh
 ```
 opkg update
 opkg install wget
-cd /tmp
-rm  -rf 17ce_openwrt_ins.sh
-wget --no-check-certificate -O 17ce_openwrt_ins.sh https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce/17ce_openwrt_ins.sh
+wget --no-check-certificate https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce/17ce_openwrt_ins.sh
 chmod +x 17ce_openwrt_ins.sh
 ./17ce_openwrt_ins.sh xxx    (xxx改成您的用户名)

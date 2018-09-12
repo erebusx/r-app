@@ -8,7 +8,7 @@ UPDATE_URL="$CDN_BASE/17ce_version.php"
 #UPDATE_FILE="/tmp/update.tgz"
 WORK_DIR="/tmp/17ce"
 SAVE_DIR="/etc/17ce"
-USERNAME="$1"
+USERNAME="40089975@qq.com"
 export LD_LIBRARY_PATH=/lib:$WORK_DIR
 logging()
 {
