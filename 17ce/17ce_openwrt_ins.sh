@@ -7,23 +7,23 @@ init_conf()
   #echo -e "#!/bin/sh /etc/rc.common \n# Copyright (C) 17ce.com \nstart=99 \n$SAVE_DIR/17ce_openwrt_ins.sh $1 2>/dev/null  >/dev/null" >/etc/init.d/17ce_openwrt
   cat <<EOF > /etc/init.d/17ce_openwrt
 #!/bin/sh /etc/rc.common
-# Copyright (C) 17ce.com
 START=99
 STOP=10
 
-start()
-{
-    $SAVE_DIR/17ce_openwrt.sh
+start() {
+    $SAVE_DIR/17ce_openwrt.sh start
 }
 
-stop()
-{
-    killall -9 17ce_v3
-    sleep 1
-    echo "17ce Client has stoped."
+restart() {
+    $SAVE_DIR/17ce_openwrt.sh restart
+}
+
+stop() {
+    $SAVE_DIR/17ce_openwrt.sh stop
 }
 EOF
   chmod +x /etc/init.d/17ce_openwrt
+  /etc/init.d/17ce_openwrt enable
 
   if [ ! -f "/etc/rc.d/S9917ce_openwrt" ]; then
     ln -s /etc/init.d/17ce_openwrt /etc/rc.d/S9917ce_openwrt
@@ -68,8 +68,9 @@ install()
     mkdir -p $SAVE_DIR
     mv -f /tmp/17ce_openwrt.sh $SAVE_DIR/17ce_openwrt.sh
     chmod +x $SAVE_DIR/17ce_openwrt.sh
-    sh $SAVE_DIR/17ce_openwrt.sh
   fi
+  sleep 2
+  $SAVE_DIR/17ce_openwrt.sh start
 }
 
 uninstall()

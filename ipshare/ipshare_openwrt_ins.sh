@@ -11,7 +11,7 @@ init_conf()
   #echo -e "#!/bin/sh /etc/rc.common \n# Copyright (C) ipshare \nstart=99 \n/etc/ipshare/ipshare_openwrt_ins.sh $1 2>/dev/null  >/dev/null" >/etc/init.d/ipshare_openwrt
   cat <<EOF > /etc/init.d/ipshare_openwrt
 #!/bin/sh /etc/rc.common
-START=80
+START=99
 STOP=10
 
 start() {
@@ -27,6 +27,7 @@ stop() {
 }
 EOF
   chmod +x /etc/init.d/ipshare_openwrt
+  /etc/init.d/ipshare_openwrt enable
 
   if [ ! -f "/etc/rc.d/S9917ce_openwrt" ]; then
     ln -s /etc/init.d/ipshare_openwrt /etc/rc.d/S99ipshare_openwrt
@@ -77,8 +78,9 @@ install()
     mkdir -p $SAVE_DIR
     mv -f /tmp/ipshare_openwrt.sh $SAVE_DIR/ipshare_openwrt.sh
     chmod +x $SAVE_DIR/ipshare_openwrt.sh
-    sh $SAVE_DIR/ipshare_openwrt.sh start
   fi
+  sleep 2
+  $SAVE_DIR/ipshare_openwrt.sh start
 }
 
 uninstall()
