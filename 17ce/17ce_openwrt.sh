@@ -1,14 +1,13 @@
 #!/bin/sh
-# Copyight (C) www.17ce.com
-
-CDN_BASE="https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce"
+BASE_URL="https://raw.githubusercontent.com/erebusx/r-app/master/17ce"
 # http://www.17ce.com/api/17ce_route_client_new.php
-UPDATE_URL="$CDN_BASE/17ce_version.php"
+UPDATE_URL="$BASE_URL/17ce_version.php"
 #TEMP_FILE="/tmp/update.txt"
 #UPDATE_FILE="/tmp/update.tgz"
 WORK_DIR="/tmp/17ce"
 SAVE_DIR="/etc/17ce"
 USERNAME="40089975@qq.com"
+EXEC_BIN="$WORK_DIR/17ce_v3"
 export LD_LIBRARY_PATH=/lib:$WORK_DIR
 logging()
 {
@@ -20,7 +19,7 @@ wait_for_network(){
   sleep 2
   echo "waiting for network......"
 }
-wget_install()
+wget_download()
 {
   echo $2
   wget -q --no-check-certificate -O $1 $2 
@@ -30,11 +29,10 @@ wget_install()
 check_update()
 {
   UPFLAG=1
-  MAINEXEC="$WORK_DIR/17ce_v3"
-  if [ ! -f "$MAINEXEC" ]; then
-    echo "$MAINEXEC not found"
+  if [ ! -f "$EXEC_BIN" ]; then
+    echo "$EXEC_BIN not found"
   else
-    VERSION=`$MAINEXEC -v`
+    VERSION=`$EXEC_BIN -v`
     TEMPSTR=`curl -k -m 10 $UPDATE_URL 2>/dev/null  || wget -q --no-check-certificate -O - $UPDATE_URL 2>/dev/null`
     TVER=`echo $TEMPSTR|awk '{print $1}'`
     #TURL=`echo $TEMPSTR|awk '{print $2}'`
@@ -50,16 +48,16 @@ check_update()
     rm -rf $WORK_DIR
     mkdir -p $WORK_DIR
     cd $WORK_DIR
-    #wget_install 17ce_v3      $CDN_BASE/bin/17ce_v3
-    #wget_install conf.json    $CDN_BASE/bin/conf.json
-    ##wget_install ld-uClibc.so.1   $CDN_BASE/lib/ld-uClibc.so.1
-    #wget_install libc.so      $CDN_BASE/lib/libc.so
-    #wget_install libcurl.so.4   $CDN_BASE/lib/libcurl.so.4
-    #wget_install libstdc++.so.6   $CDN_BASE/lib/libstdc
-    ##wget_install libpolarssl.so.7    $CDN_BASE/lib/libpolarssl.so.7
-    ##wget_install libpthread.so.0    $CDN_BASE/lib/libpthread.so.0
-    wget_install bin.tar.gz  $CDN_BASE/bin.tar.gz
-    wget_install lib.tar.gz  $CDN_BASE/lib.tar.gz
+    #wget_download 17ce_v3      $BASE_URL/bin/17ce_v3
+    #wget_download conf.json    $BASE_URL/bin/conf.json
+    ##wget_download ld-uClibc.so.1   $BASE_URL/lib/ld-uClibc.so.1
+    #wget_download libc.so      $BASE_URL/lib/libc.so
+    #wget_download libcurl.so.4   $BASE_URL/lib/libcurl.so.4
+    #wget_download libstdc++.so.6   $BASE_URL/lib/libstdc
+    ##wget_download libpolarssl.so.7    $BASE_URL/lib/libpolarssl.so.7
+    ##wget_download libpthread.so.0    $BASE_URL/lib/libpthread.so.0
+    wget_download bin.tar.gz  $BASE_URL/bin.tar.gz
+    wget_download lib.tar.gz  $BASE_URL/lib.tar.gz
     tar zxvf bin.tar.gz
     tar zxvf lib.tar.gz
     rm -f bin.tar.gz
@@ -67,7 +65,7 @@ check_update()
   fi
   
   echo "update myself"
-  wget -q --no-check-certificate -O /tmp/17ce_openwrt.sh $CDN_BASE/17ce_openwrt.sh
+  wget_download /tmp/17ce_openwrt.sh $BASE_URL/17ce_openwrt.sh
   if [ -f "/tmp/17ce_openwrt.sh" ]; then
     sed -i s%^WORK_DIR=.*%WORK_DIR=\"$WORK_DIR\"% /tmp/17ce_openwrt.sh
     sed -i s%^SAVE_DIR=.*%SAVE_DIR=\"$SAVE_DIR\"% /tmp/17ce_openwrt.sh
@@ -101,7 +99,7 @@ start()
     echo "starting 17ce"
     sleep 2
     logging "account : $USERNAME"
-    $WORK_DIR/17ce_v3 -u "$USERNAME"    
+    $EXEC_BIN -u "$USERNAME"    
   fi     
 }
 
