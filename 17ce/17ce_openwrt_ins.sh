@@ -58,7 +58,7 @@ install()
   #rm -f 17ce*
   killall -9 17ce_v3 2>/dev/null  >/dev/null
   cd /tmp
-  wget --no-check-certificate -O /tmp/17ce_openwrt.sh https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce/17ce_openwrt.sh 2>/dev/null >/dev/null
+  wget -q --no-check-certificate -O /tmp/17ce_openwrt.sh https://raw.githubusercontent.com/erebusx/r-app/17ce/17ce/17ce_openwrt.sh
   if [ -f "/tmp/17ce_openwrt.sh" ]; then
     init_conf $1
     sed -i s%WORK_DIR=.*%WORK_DIR=\"$WORK_DIR\"% /tmp/17ce_openwrt.sh
