@@ -1,7 +1,6 @@
 #ipshare for 老毛子padavan：
 
 ```
-cd /tmp
 wget https://raw.githubusercontent.com/erebusx/r-app/ipshare/ipshare/ipshare_padavan_ins.sh
 chmod +x ipshare_padavan_ins.sh
 ./ipshare_padavan_ins.sh xxx   （xxx改成您的用户名）
@@ -12,7 +11,6 @@ chmod +x ipshare_padavan_ins.sh
 ```
 opkg update
 opkg install wget
-cd /tmp
 wget --no-check-certificate https://raw.githubusercontent.com/erebusx/r-app/ipshare/ipshare/ipshare_openwrt_ins.sh
 chmod +x ipshare_openwrt_ins.sh
 ./ipshare_openwrt_ins.sh xxx   （xxx改成您的用户名）
