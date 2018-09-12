@@ -12,18 +12,18 @@ init_conf()
   cat <<EOF > /etc/init.d/ipshare_openwrt
 #!/bin/sh /etc/rc.common
 START=80
+STOP=10
 
 start() {
-    #$SAVE_DIR/ipshare_openwrt.sh start
-    /sbin/ipshare start
+    $SAVE_DIR/ipshare_openwrt.sh start
 }
 
 restart() {
-    /sbin/ipshare restart
+    $SAVE_DIR/ipshare_openwrt.sh restart
 }
 
 stop() {
-    /sbin/ipshare stop
+    $SAVE_DIR/ipshare_openwrt.sh stop
 }
 EOF
   chmod +x /etc/init.d/ipshare_openwrt
@@ -57,12 +57,12 @@ install()
   if [ $# == 1 ]; then
     echo "ipshare account：$1"
     USERNAME="$1"
-	  sleep 2
+    sleep 2
   else
-	  echo "Usage: ipshare_openwrt_ins.sh install xxx"
-	  USERNAME="erebusx"
+    echo "Usage: ipshare_openwrt_ins.sh install xxx"
+    USERNAME="erebusx"
   fi
-  
+
   rm -rf $SAVE_DIR
   rm -rf $WORK_DIR
   rm -f $CONF_FILE

@@ -14,9 +14,9 @@ logging()
   logger -t "【ipshare】" "$1"
 }
 wget_download()
-{    
+{
   echo $2
-  wget -q --no-check-certificate -O $1 $2 
+  wget -q --no-check-certificate -O $1 $2
   chmod +x $1
 }
 
@@ -28,7 +28,7 @@ check_update()
   else
     UPFLAG=0
   fi
-  
+
   if [ "$UPFLAG" != "0" ]; then
     echo "downloading files"
     $EXEC_BIN stop
@@ -44,11 +44,11 @@ check_update()
     #wget_download libpolarssl.so.7     $BASE_URL/lib/libpolarssl.so.7
     #wget_download libpthread.so.0     $BASE_URL/lib/libpthread.so.0
     #wget_download ipshare       $BASE_URL/bin/ipshare
-    wget_download bin.tar.gz  $CDN_BASE/bin.tar.gz
+    wget_download bin.tar.gz $BASE_URL/bin.tar.gz
     tar zxvf bin.tar.gz
     rm -f bin.tar.gz
   fi
-  
+
   echo "update myself"
   wget_download /tmp/ipshare_openwrt.sh https://raw.githubusercontent.com/erebusx/r-app/ipshare/ipshare/ipshare_openwrt.sh
   if [ -f "/tmp/ipshare_openwrt.sh" ]; then
@@ -70,6 +70,7 @@ start()
     #USERNAME=`grep 'option username' $CONF_FILE | awk '{print $3}'`
     #sed -i "s%option username%option username '$USERNAME'%" $CONF_FILE
     logging "starting ipshare"
+    sleep 2
     $EXEC_BIN start
   fi
 }
@@ -78,6 +79,7 @@ stop()
 {
   if [ -f "$EXEC_BIN" ]; then
     logging "stoping 17ce"
+    sleep 2
     $EXEC_BIN stop
   fi
 }
@@ -86,5 +88,8 @@ restart()
 {
   check_update
   logging "restarting 17ce"
+  sleep 2
   $EXEC_BIN restart
 }
+
+$*
