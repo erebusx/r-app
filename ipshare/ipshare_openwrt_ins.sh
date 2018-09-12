@@ -4,7 +4,6 @@ WORK_DIR='/tmp/ipshare'
 SAVE_DIR='/etc/ipshare'
 CONF_DIR='/etc/config'
 CONF_FILE="$CONF_DIR/ipshare"
-
 export LD_LIBRARY_PATH=/lib:$WORK_DIR
 
 init_conf()
@@ -69,12 +68,12 @@ install()
   rm -f $CONF_FILE
   killall -9 17ce_v3 2>/dev/null >/dev/null
   cd /tmp
-  wget -q --no-check-certificate -O /tmp/ipshare_openwrt.sh https://raw.githubusercontent.com/erebusx/r-app/ipshare/ipshare/ipshare_openwrt.sh
+  wget -q --no-check-certificate -O /tmp/ipshare_openwrt.sh $BASE_URL/ipshare_openwrt.sh
   if [ -f "/tmp/ipshare_openwrt.sh" ]; then
     init_conf $USERNAME
     sed -i s%^WORK_DIR=.*%WORK_DIR=\"$WORK_DIR\"% /tmp/ipshare_openwrt.sh
     sed -i s%^SAVE_DIR=.*%SAVE_DIR=\"$SAVE_DIR\"% /tmp/ipshare_openwrt.sh
-    sed -i s%^USERNAME=.*%USERNAME=\"$USERNAME\"% /tmp/ipshare_openwrt.sh
+    #sed -i s%^USERNAME=.*%USERNAME=\"$USERNAME\"% /tmp/ipshare_openwrt.sh
     mkdir -p $SAVE_DIR
     mv -f /tmp/ipshare_openwrt.sh $SAVE_DIR/ipshare_openwrt.sh
     chmod +x $SAVE_DIR/ipshare_openwrt.sh
@@ -82,13 +81,14 @@ install()
   fi
 }
 
-uninstall
+uninstall()
 {
   echo "uninstalling ipshare"
-  killall -9 17ce_v3
+  killall -9 ipshare
   rm -rf $SAVE_DIR
   rm -rf $WORK_DIR
   rm -f $CONF_FILE
+  rm -f /etc/init.d/ipshare_openwrt
   rm -f /etc/rc.d/S99ipshare_openwrt
   rm -f /etc/rc.d/K10ipshare_openwrt
   if [ -f "/etc/crontabs/root" ]; then
@@ -96,4 +96,5 @@ uninstall
   fi
   echo "done"
 }
+
 $*

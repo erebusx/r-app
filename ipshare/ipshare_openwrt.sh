@@ -54,7 +54,7 @@ check_update()
   if [ -f "/tmp/ipshare_openwrt.sh" ]; then
     sed -i s%^WORK_DIR=.*%WORK_DIR=\"$WORK_DIR\"% /tmp/ipshare_openwrt.sh
     sed -i s%^SAVE_DIR=.*%SAVE_DIR=\"$SAVE_DIR\"% /tmp/ipshare_openwrt.sh
-    sed -i s%^USERNAME=.*%USERNAME=\"$USERNAME\"% /tmp/ipshare_openwrt.sh
+    #sed -i s%^USERNAME=.*%USERNAME=\"$USERNAME\"% /tmp/ipshare_openwrt.sh
     mkdir -p $SAVE_DIR
     mv -f /tmp/ipshare_openwrt.sh $SAVE_DIR/ipshare_openwrt.sh
     chmod +x $SAVE_DIR/ipshare_openwrt.sh
@@ -67,7 +67,9 @@ start()
   if ps|grep -w "ipshare start"|grep -v grep 2>/dev/null >/dev/null; then
     echo "ipshare is Running"
   else
-    logging "starting 17ce"
+    #USERNAME=`grep 'option username' $CONF_FILE | awk '{print $3}'`
+    #sed -i "s%option username%option username '$USERNAME'%" $CONF_FILE
+    logging "starting ipshare"
     $EXEC_BIN start
   fi
 }
