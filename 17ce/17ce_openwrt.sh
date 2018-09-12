@@ -43,7 +43,7 @@ check_update()
   fi
   
   if [ "$UPFLAG" != "0" ]; then
-    echo "downloading files"
+    logging "downloading files"
     killall -9 17ce_v3 2>/dev/null  >/dev/null
     rm -rf $WORK_DIR
     mkdir -p $WORK_DIR
@@ -64,7 +64,7 @@ check_update()
     rm -f lib.tar.gz
   fi
   
-  echo "update myself"
+  logging "update myself"
   wget_download /tmp/17ce_openwrt.sh $BASE_URL/17ce_openwrt.sh
   if [ -f "/tmp/17ce_openwrt.sh" ]; then
     sed -i s%^WORK_DIR=.*%WORK_DIR=\"$WORK_DIR\"% /tmp/17ce_openwrt.sh
@@ -80,27 +80,46 @@ start()
   wait_for_network
   check_update      
   if ps|grep -w "17ce_v3"|grep -v grep 2>/dev/null >/dev/null; then
-    echo "17ce is Running"
+    logging "17ce is Running"
   	MEM=`ps|grep 17ce_v3|grep -v grep|awk '{print $3}'`
     if [ "$MEM" -gt 35000 ]; then
-      echo "mem out: $MEM"
-      /etc/init.d/17ce* restart
+      logging "mem out: $MEM"
+      restart
     else
       echo "mem ok"
       LOGSIZE=`ls $WORK_DIR/17ce_v3.log -l| awk '{print $5}'`
       if [ "$LOGSIZE" -gt 1000000 ]; then
-        echo "log size out: $LOGSIZE"
-        /etc/init.d/17ce* restart
+        logging "log size out: $LOGSIZE"
+        restart
       else
         echo "log size ok"
       fi
     fi
   else
-    echo "starting 17ce"
+    logging "starting 17ce, account : $USERNAME"
     sleep 2
-    logging "account : $USERNAME"
     $EXEC_BIN -u "$USERNAME"    
   fi     
 }
 
-start
+stop()
+{
+  if [ -f "$EXEC_BIN" ]; then
+    logging "stoping 17ce"
+    sleep 2
+    $EXEC_BIN -k
+  fi
+  sleep 2
+  killall -9 17ce
+}
+
+restart()
+{
+  logging "restarting 17ce"
+  sleep 2
+  stop
+  sleep 2
+  start
+}
+
+$*

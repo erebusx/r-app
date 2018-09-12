@@ -37,7 +37,7 @@ EOF
   if grep -wq "17ce_openwrt.sh" /etc/crontabs/root; then
     echo "OK"
   else
-    echo "0 */1 * * * $SAVE_DIR/17ce_openwrt.sh &">>/etc/crontabs/root
+    echo "0 */1 * * * $SAVE_DIR/17ce_openwrt.sh start &">>/etc/crontabs/root
   fi
 }
 

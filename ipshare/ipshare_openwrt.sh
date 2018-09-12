@@ -30,7 +30,7 @@ check_update()
   fi
 
   if [ "$UPFLAG" != "0" ]; then
-    echo "downloading files"
+    logging "downloading files"
     $EXEC_BIN stop
     sleep 2
     killall -9 ipshare 2>/dev/null >/dev/null
@@ -49,7 +49,7 @@ check_update()
     rm -f bin.tar.gz
   fi
 
-  echo "update myself"
+  logging "update myself"
   wget_download /tmp/ipshare_openwrt.sh $BASE_URL/ipshare_openwrt.sh
   if [ -f "/tmp/ipshare_openwrt.sh" ]; then
     sed -i s%^WORK_DIR=.*%WORK_DIR=\"$WORK_DIR\"% /tmp/ipshare_openwrt.sh
@@ -65,7 +65,7 @@ start()
 {
   check_update
   if ps|grep -w "ipshare start"|grep -v grep 2>/dev/null >/dev/null; then
-    echo "ipshare is Running"
+    logging "ipshare is Running"
   else
     #USERNAME=`grep 'option username' $CONF_FILE | awk '{print $3}'`
     #sed -i "s%option username%option username '$USERNAME'%" $CONF_FILE
@@ -78,16 +78,18 @@ start()
 stop()
 {
   if [ -f "$EXEC_BIN" ]; then
-    logging "stoping 17ce"
+    logging "stoping ipshare"
     sleep 2
     $EXEC_BIN stop
   fi
+  sleep 2
+  killall -9 ipshare
 }
 
 restart()
 {
   check_update
-  logging "restarting 17ce"
+  logging "restarting ipshare"
   sleep 2
   $EXEC_BIN restart
 }

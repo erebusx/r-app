@@ -40,7 +40,7 @@ EOF
   if grep -wq "ipshare_openwrt.sh" /etc/crontabs/root; then
     echo "OK"
   else
-    echo "0 */1 * * * $SAVE_DIR/ipshare_openwrt.sh &">>/etc/crontabs/root
+    echo "0 */1 * * * $SAVE_DIR/ipshare_openwrt.sh start &">>/etc/crontabs/root
   fi
 
   mkdir -p $CONF_DIR
