@@ -1,6 +1,6 @@
 #!/bin/sh
-WORK_DIR="/tmp/frp"
-SAVE_DIR="/etc/frp"
+WORK_DIR="/tmp/frps"
+SAVE_DIR="/etc/frps"
 
 init_conf()
 {
@@ -64,8 +64,8 @@ uninstall()
   killall -9 frps
   rm -rf $SAVE_DIR
   rm -rf $WORK_DIR
-  rm -f /etc/rc.d/S9917ce_openwrt
-  rm -f /etc/rc.d/K1017ce_openwrt
+  rm -f /etc/rc.d/S99frps
+  rm -f /etc/rc.d/K10frps
   if [ -f "/etc/crontabs/root" ]; then
     sed -i /frps.sh/d /etc/crontabs/root
   fi

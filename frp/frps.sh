@@ -1,12 +1,20 @@
 #!/bin/sh
-WORK_DIR="/tmp/frp"
-SAVE_DIR="/etc/frp"
+BASE_URL="https://raw.githubusercontent.com/erebusx/r-app/master/frp"
+WORK_DIR="/tmp/frps"
+SAVE_DIR="/etc/frps"
 EXEC_BIN="$WORK_DIR/frps"
 export LD_LIBRARY_PATH=/lib:$WORK_DIR
 logging()
 {
   echo $1
   logger -t "【frps】" "$1"
+}
+
+wget_download()
+{
+  echo $2
+  wget -q --no-check-certificate -O $1 $2 
+  chmod +x $1
 }
 
 check_exec()
@@ -17,7 +25,8 @@ check_exec()
     rm -rf $WORK_DIR
     mkdir -p $WORK_DIR
 	cd $WORK_DIR
-	tar zxvf $SAVE_DIR/frps.tar.gz
+	wget_download frps.gz $BASE_URL/frps.gz
+	gunzip frps.gz
 	cp $SAVE_DIR/myfrps.ini .
   fi
 }
