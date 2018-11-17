@@ -66,6 +66,7 @@ uninstall()
   rm -rf $WORK_DIR
   rm -f /etc/rc.d/S99frpc
   rm -f /etc/rc.d/K10frpc
+  rm -f /etc/init.d/frpc
   if [ -f "/etc/crontabs/root" ]; then
     sed -i /frpc.sh/d /etc/crontabs/root
   fi

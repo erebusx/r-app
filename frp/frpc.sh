@@ -27,7 +27,10 @@ check_exec()
 	cd $WORK_DIR
 	wget_download frpc.gz $BASE_URL/frpc.gz
 	gunzip frpc.gz
-	cp $SAVE_DIR/myfrpc.ini .
+	chmod +x frpc
+  fi
+  if [ ! -f "$WORK_DIR/myfrpc.ini" ]; then
+	cp $SAVE_DIR/myfrpc.ini $WORK_DIR/myfrpc.ini
   fi
 }
 

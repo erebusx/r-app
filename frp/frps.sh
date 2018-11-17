@@ -27,7 +27,10 @@ check_exec()
 	cd $WORK_DIR
 	wget_download frps.gz $BASE_URL/frps.gz
 	gunzip frps.gz
-	cp $SAVE_DIR/myfrps.ini .
+	chmod +x frps
+  fi
+  if [ ! -f "$WORK_DIR/myfrps.ini" ]; then
+	cp $SAVE_DIR/myfrps.ini $WORK_DIR/myfrps.ini
   fi
 }
 
